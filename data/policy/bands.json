@@ -1,0 +1,12 @@
+{
+  "EURTND": [
+    { "min_months": 0, "max_months": 3, "coverage_pct": 0.80, "band_lower": 3.30, "band_upper": 3.50 },
+    { "min_months": 3, "max_months": 6, "coverage_pct": 0.60, "band_lower": 3.25, "band_upper": 3.55 },
+    { "min_months": 6, "max_months": 12, "coverage_pct": 0.40, "band_lower": 3.20, "band_upper": 3.60 }
+  ],
+  "USDTND": [
+    { "min_months": 0, "max_months": 3, "coverage_pct": 0.80, "band_lower": 3.10, "band_upper": 3.30 },
+    { "min_months": 3, "max_months": 6, "coverage_pct": 0.60, "band_lower": 3.05, "band_upper": 3.35 },
+    { "min_months": 6, "max_months": 12, "coverage_pct": 0.40, "band_lower": 3.00, "band_upper": 3.40 }
+  ]
+}

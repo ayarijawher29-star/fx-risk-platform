@@ -1,0 +1,10 @@
+{
+  "trader_var_limit_eur": 50000,
+  "trader_var_limit_usd": 50000,
+  "technical_sma_short": 50,
+  "technical_sma_medium": 100,
+  "technical_sma_long": 200,
+  "technical_rsi_period": 14,
+  "technical_bb_period": 20,
+  "technical_atr_period": 14
+}
