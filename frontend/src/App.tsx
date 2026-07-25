@@ -2,6 +2,8 @@ import { useState } from 'react';
 import ClientForm from './components/ClientForm';
 import CoverageGauge from './components/CoverageGauge';
 import TraderDashboard from './components/TraderDashboard';
+import FXChart from './components/FXChart';
+import MacroDashboard from './components/MacroDashboard';
 
 function App() {
   const [activeTab, setActiveTab] = useState<'client' | 'trader'>('client');
@@ -52,23 +54,31 @@ function App() {
       <div style={{ maxWidth: '800px', margin: '0 auto' }}>
         {activeTab === 'client' && (
           <div>
-            <CoverageGauge 
-              position={0.75} 
-              lowerBound={3.30} 
-              upperBound={3.50} 
-              currentSpot={3.452} 
-              label="EUR/TND - Bande de couverture (3 mois)"
-            />
+            <div style={{ marginBottom: '20px' }}>
+              <CoverageGauge 
+                position={0.75} 
+                lowerBound={3.30} 
+                upperBound={3.50} 
+                currentSpot={3.452} 
+                label="EUR/TND — Bande de couverture (3 mois)"
+              />
+            </div>
+            <div style={{ marginBottom: '20px' }}>
+              <FXChart />
+            </div>
+            <div style={{ marginBottom: '20px' }}>
+              <MacroDashboard />
+            </div>
             <ClientForm />
           </div>
         )}
         
         {activeTab === 'trader' && (
-  <div>
-    <h2 style={{ color: 'white', textAlign: 'center', marginBottom: '20px' }}>📊 Module Trader (Book)</h2>
-    <TraderDashboard />
-  </div>
-)}
+          <div>
+            <h2 style={{ color: 'white', textAlign: 'center', marginBottom: '20px' }}>📊 Module Trader (Book)</h2>
+            <TraderDashboard />
+          </div>
+        )}
       </div>
     </div>
   );
