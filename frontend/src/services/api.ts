@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_BASE = 'http://127.0.0.1:8000';
+// URL Render (backend en ligne)
+const API_BASE = 'https://fx-risk-api.onrender.com';
 
 export const api = axios.create({
   baseURL: API_BASE,
