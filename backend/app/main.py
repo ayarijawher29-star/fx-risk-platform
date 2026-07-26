@@ -1,6 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routers import market, signal, client, trader
+from app.data.seed_on_startup import seed_database
+
+# Recharger les données au démarrage (critique pour Render)
+seed_database()
 
 app = FastAPI(
     title="FX Risk Management Platform",
@@ -8,7 +12,6 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# CORS pour le frontend React (localhost:3000)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -17,7 +20,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Routers
 app.include_router(market.router)
 app.include_router(signal.router)
 app.include_router(client.router)
