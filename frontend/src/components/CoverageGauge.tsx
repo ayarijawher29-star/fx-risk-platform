@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface GaugeProps {
-  position: number; // 0.0 to 1.0
+  position: number;
   lowerBound: number;
   upperBound: number;
   currentSpot: number;
@@ -10,67 +10,102 @@ interface GaugeProps {
 
 const CoverageGauge: React.FC<GaugeProps> = ({ position, lowerBound, upperBound, currentSpot, label }) => {
   const percentage = Math.round(position * 100);
-  
-  // Color based on position
+
   const getColor = () => {
-    if (percentage <= 30) return '#22c55e'; // green - wait
-    if (percentage <= 70) return '#eab308'; // yellow - neutral
-    return '#ef4444'; // red - cover now
+    if (percentage <= 30) return 'var(--success)';
+    if (percentage <= 70) return 'var(--warning)';
+    return 'var(--danger)';
+  };
+
+  const getLabel = () => {
+    if (percentage <= 30) return 'Attendre';
+    if (percentage <= 70) return 'Neutre';
+    return 'Couvrir vite';
   };
 
   return (
-    <div style={{ 
-      background: '#1e293b', 
-      borderRadius: '12px', 
-      padding: '20px', 
-      margin: '10px 0',
-      color: 'white',
-      fontFamily: 'system-ui, sans-serif'
+    <div style={{
+      background: 'var(--bg-card)',
+      borderRadius: '16px',
+      padding: '24px',
+      border: '1px solid var(--border-color)',
+      boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
+      height: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between'
     }}>
-      <h3 style={{ margin: '0 0 15px 0', fontSize: '14px', textTransform: 'uppercase', color: '#94a3b8' }}>
-        {label}
-      </h3>
-      
-      {/* Gauge bar */}
-      <div style={{ position: 'relative', height: '40px', background: '#334155', borderRadius: '20px', overflow: 'hidden' }}>
-        {/* Gradient background */}
+      <div>
+        <h3 style={{
+          margin: '0 0 20px 0',
+          fontSize: '13px',
+          textTransform: 'uppercase',
+          color: 'var(--text-secondary)',
+          letterSpacing: '1px',
+          fontWeight: '600'
+        }}>
+          {label}
+        </h3>
+
+        {/* Gauge Track */}
         <div style={{
-          position: 'absolute',
-          left: 0, right: 0, top: 0, bottom: 0,
-          background: 'linear-gradient(to right, #22c55e 0%, #eab308 50%, #ef4444 100%)',
-          opacity: 0.3
+          position: 'relative',
+          height: '48px',
+          background: 'linear-gradient(to right, var(--success), var(--warning), var(--danger))',
+          borderRadius: '24px',
+          overflow: 'hidden',
+          opacity: 0.2,
+          marginBottom: '8px'
         }} />
-        
-        {/* Position marker */}
+
+        {/* Gauge Marker */}
+        <div style={{ position: 'relative', height: '4px', marginTop: '-32px', marginBottom: '28px' }}>
+          <div style={{
+            position: 'absolute',
+            left: `${percentage}%`,
+            transform: 'translate(-50%, -50%)',
+            top: '50%',
+            width: '28px',
+            height: '28px',
+            background: getColor(),
+            borderRadius: '50%',
+            border: '3px solid var(--bg-card)',
+            boxShadow: `0 0 20px ${getColor()}40`,
+            zIndex: 10,
+            transition: 'all 0.5s ease'
+          }} />
+        </div>
+
+        {/* Labels */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', color: 'var(--text-muted)', marginBottom: '16px' }}>
+          <span>{lowerBound}</span>
+          <span style={{ color: getColor(), fontWeight: '700', fontSize: '14px' }}>{percentage}% — {getLabel()}</span>
+          <span>{upperBound}</span>
+        </div>
+      </div>
+
+      <div style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingTop: '16px',
+        borderTop: '1px solid var(--border-color)'
+      }}>
+        <div>
+          <div style={{ fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Spot actuel</div>
+          <div style={{ fontSize: '20px', fontWeight: '700', color: 'var(--text-primary)' }}>{currentSpot}</div>
+        </div>
         <div style={{
-          position: 'absolute',
-          left: `${percentage}%`,
-          top: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: '24px',
-          height: '24px',
-          background: getColor(),
-          borderRadius: '50%',
-          border: '3px solid white',
-          boxShadow: '0 0 10px rgba(0,0,0,0.5)',
-          zIndex: 10
-        }} />
-        
-        {/* Tick marks */}
-        <div style={{ position: 'absolute', left: '25%', top: 0, bottom: 0, width: '2px', background: 'rgba(255,255,255,0.2)' }} />
-        <div style={{ position: 'absolute', left: '50%', top: 0, bottom: 0, width: '2px', background: 'rgba(255,255,255,0.3)' }} />
-        <div style={{ position: 'absolute', left: '75%', top: 0, bottom: 0, width: '2px', background: 'rgba(255,255,255,0.2)' }} />
-      </div>
-      
-      {/* Labels */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '8px', fontSize: '12px', color: '#94a3b8' }}>
-        <span>Attendre ({lowerBound})</span>
-        <span style={{ fontWeight: 'bold', color: getColor(), fontSize: '14px' }}>{percentage}%</span>
-        <span>Couvrir vite ({upperBound})</span>
-      </div>
-      
-      <div style={{ marginTop: '10px', fontSize: '13px', color: '#cbd5e1' }}>
-        Spot actuel : <strong>{currentSpot}</strong>
+          padding: '6px 14px',
+          borderRadius: '20px',
+          background: `${getColor()}15`,
+          color: getColor(),
+          fontSize: '12px',
+          fontWeight: '600',
+          border: `1px solid ${getColor()}30`
+        }}>
+          {percentage <= 30 ? 'Zone verte' : percentage <= 70 ? 'Zone jaune' : 'Zone rouge'}
+        </div>
       </div>
     </div>
   );

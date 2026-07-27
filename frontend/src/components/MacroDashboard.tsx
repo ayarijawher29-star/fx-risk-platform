@@ -24,7 +24,6 @@ const MacroDashboard: React.FC = () => {
     const fetchData = async () => {
       try {
         const response = await getMacroSummary();
-        // Garder le dernier de chaque indicateur
         const latest: Record<string, MacroData> = {};
         response.data.indicators.forEach((item: MacroData) => {
           const key = `${item.country}-${item.indicator}`;
@@ -41,34 +40,29 @@ const MacroDashboard: React.FC = () => {
     fetchData();
   }, []);
 
-  if (loading) return <div style={{ color: '#94a3b8', textAlign: 'center', padding: '20px' }}>Chargement macro...</div>;
+  if (loading) return <div style={{ color: 'var(--text-secondary)', textAlign: 'center', padding: '20px' }}>Chargement macro...</div>;
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '12px' }}>
+    <div className="grid-auto">
       {data.map((item, idx) => {
         const meta = INDICATOR_LABELS[item.indicator] || { label: item.indicator, unit: '' };
         const isHigh = item.indicator === 'FED_RATE' && item.value >= 5;
         const isLow = item.indicator === 'UNEMPLOYMENT' && item.value <= 4;
-        
+
         return (
-          <div key={idx} style={{
-            background: '#1e293b',
-            borderRadius: '10px',
+          <div key={idx} className="card" style={{
             padding: '16px',
-            color: 'white',
-            borderTop: `3px solid ${item.country === 'US' ? '#3b82f6' : '#22c55e'}`
+            borderTop: `3px solid ${item.country === 'US' ? 'var(--accent-blue)' : 'var(--accent-green)'}`
           }}>
-            <div style={{ fontSize: '11px', color: '#94a3b8', textTransform: 'uppercase', marginBottom: '4px' }}>
-              {item.country} • {meta.label}
-            </div>
+            <div className="field-label">{item.country} • {meta.label}</div>
             <div style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '4px' }}>
               {item.value.toFixed(2)}{meta.unit}
             </div>
-            <div style={{ fontSize: '11px', color: '#64748b' }}>
+            <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
               {item.date}
             </div>
             {(isHigh || isLow) && (
-              <div style={{ marginTop: '6px', fontSize: '11px', color: isHigh ? '#ef4444' : '#22c55e' }}>
+              <div style={{ marginTop: '6px', fontSize: '11px', color: isHigh ? 'var(--accent-red)' : 'var(--accent-green)' }}>
                 {isHigh ? '↑ Restrictif' : '↓ Solide'}
               </div>
             )}
