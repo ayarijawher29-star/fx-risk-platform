@@ -1,6 +1,6 @@
 # FX Risk Management Platform
 
-A dual-module platform simulating how a bank trading room manages FX risk — combining technical, fundamental, and sentiment analysis to support hedging decisions for corporate clients and internal book management.
+A dual-module platform simulating how a bank trading room manages FX risk, combining technical, fundamental, and sentiment analysis to support hedging decisions for corporate clients and internal book management.
 
 Built during my sales forex internship at BH Bank to connect academic finance theory with real trading room decision-making.
 
