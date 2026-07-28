@@ -10,8 +10,7 @@ export const api = axios.create({
   },
 });
 
-export const getEURUSDHistory = () => api.get('/market/eurusd');
-export const getTNDFixing = () => api.get('/market/tnd');
+export const getEURUSDHistory = () => api.get('/market/eurusd?limit=250');
 export const getMacroSummary = () => api.get('/market/macro');
 export const getSignal = (pair: string) => api.get(`/signal/${pair}`);
 export const getTraderBook = () => api.get('/trader/book');
